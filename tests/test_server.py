@@ -102,7 +102,7 @@ class ServerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             with patch.object(api,'EXPORT_DIR',Path(folder)):
                 preview=api.pw_export_book_txt(self.book)
-                self.assertEqual(Path(preview['output_path']).parent,Path(folder))
+                self.assertEqual(Path(preview['output_path']).parent,Path(folder).resolve())
                 self.assertFalse(Path(preview['output_path']).exists())
 
 
