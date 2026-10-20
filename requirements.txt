@@ -1,0 +1,2 @@
+# Verified with Python 3.14 on Windows.
+mcp==2.3.0

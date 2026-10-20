@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "purewriter": {
+      "command": "C:/Tools/purewriter-mcp/.venv/Scripts/python.exe",
+      "args": ["-B", "-X", "utf8", "C:/Tools/purewriter-mcp/purewriter_mcp_server.py"],
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PUREWRITER_DATA_DIR": "C:/Users/YOUR_NAME/Documents/PureWriter/App"
+      }
+    }
+  }
+}
