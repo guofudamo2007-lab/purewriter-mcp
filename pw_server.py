@@ -114,7 +114,7 @@ def pw_get_status() -> dict[str, Any]:
         history = h.execute('SELECT COUNT(*) FROM History').fetchone()[0]
         history_mode = h.execute('PRAGMA journal_mode').fetchone()[0]
     pids = running_pids()
-    return dict(ok=True, version='2.0.1', data_dir=str(DATA), app_running=bool(pids),
+    return dict(ok=True, version='2.1.0', data_dir=str(DATA), app_running=bool(pids),
         active_books=books, active_articles=count, history_snapshots=history,
         journal_modes=dict(room=mode, history=history_mode),
         write_ready=not pids and mode in ('delete','persist','truncate') and history_mode in ('delete','persist','truncate'),

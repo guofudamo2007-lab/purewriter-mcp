@@ -19,7 +19,9 @@ py -3.14 -m venv .venv
 
 数据库目录须同时包含 `Room.db` 和 `History.db`。默认查找当前用户的 `Documents/PureWriter/App`；如果文档文件夹被重定向到 OneDrive 或其他位置，请显式设置路径。
 
-### Codex / Antigravity
+### 选择 AI 客户端
+
+现有 Codex / Antigravity 接入已扩展为 13 种配置方案：Claude Desktop、Claude Code、Cursor / Cursor CLI、Gemini CLI、VS Code / Copilot、Copilot CLI、Cline、Roo Code、OpenCode、Windsurf 和 Devin Desktop。完整路径、格式及接入命令见 [客户端适配指南](CLIENTS.md)。
 
 配置助手默认只预览，且默认仅处理 Codex：
 
@@ -36,9 +38,11 @@ py -3.14 -m venv .venv
 .\.venv\Scripts\python.exe configure_clients.py --client codex --data-dir 'C:\Path\To\PureWriter\App' --book '我的小说'
 ```
 
-重载 MCP 或重启助手后，调用 `pw_get_status`。当前版本应为 `2.0.1`，共 21 个工具。书名可以不预设：先用 `pw_list_books` 找到书籍 ID，再在工具参数中明确指定 `book`。
+重载 MCP 或重启助手后，调用 `pw_get_status`。当前版本应为 `2.1.0`，共 21 个工具。书名可以不预设：先用 `pw_list_books` 找到书籍 ID，再在工具参数中明确指定 `book`。
 
-### 其他 MCP 客户端
+### 通用配置与环境变量
+
+可用 `--list-clients` 查看适配器，`--print-config` 输出所选客户端格式的片段；`--project-dir` 指定项目，`--config-path` 指定实际配置文件，`--client` 可重复选择多个客户端。脚本保留原有权限设置和 JSONC 的其他条目及注释。
 
 将 [JSON 配置示例](examples/mcp-config.json) 中的绝对路径改为自己的路径，放进客户端的 MCP 配置。`command` 必须指向已安装依赖的 Python，`args` 指向本项目的 `purewriter_mcp_server.py`。
 
@@ -51,6 +55,8 @@ py -3.14 -m venv .venv
 | `PUREWRITER_EXPORT_DIR` | 当前用户 `Documents/PureWriterExports` |
 
 ## 使用
+
+各类 agent 的参数约定、失败重试和完整改稿规则见 [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md)。
 
 可以这样请求助手：
 

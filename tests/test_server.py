@@ -118,14 +118,18 @@ class ProtocolTests(unittest.TestCase):
                     env=dict(os.environ,PUREWRITER_DATA_DIR=str(root),DEFAULT_BOOK_NAME='book',PYTHONIOENCODING='utf-8'))
                 async with stdio_client(params) as (reader,writer):
                     async with ClientSession(reader,writer) as session:
-                        await session.initialize()
+                        initialized = await session.initialize()
+                        self.assertIn('expected_revision', initialized.instructions)
+                        self.assertIn('request_id', initialized.instructions)
                         tools=(await session.list_tools()).tools
                         self.assertIn('pw_batch_patch',[t.name for t in tools])
                         self.assertTrue(next(t for t in tools if t.name=='pw_read_chapter').annotations.read_only_hint)
                         async def call(name,args):
                             result=await session.call_tool(name,args)
                             self.assertFalse(result.is_error,str(result.content))
-                            return result.structured_content or json.loads(result.content[0].text)
+                            text_result = json.loads(result.content[0].text)
+                            self.assertEqual(text_result, result.structured_content)
+                            return text_result
                         row=(await call('pw_read_chapter',{'chapter_id_or_title':'a'}))['article']
                         changes=[dict(chapter_id='a',expected_revision=row['revision'],edits=[dict(old_text='门口很冷。',new_text='协议测试改写。')])]
                         preview=await call('pw_batch_patch',{'changes':changes})

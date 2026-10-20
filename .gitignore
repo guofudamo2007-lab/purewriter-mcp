@@ -20,3 +20,13 @@ config.local.*
 dist/
 build/
 *.egg-info/
+
+# Local agent connections may contain absolute paths and private defaults.
+/.mcp.json
+/.cursor/mcp.json
+/.vscode/mcp.json
+/.roo/mcp.json
+/.gemini/settings.json
+/.agents/mcp_config.json
+/opencode.json
+/opencode.jsonc

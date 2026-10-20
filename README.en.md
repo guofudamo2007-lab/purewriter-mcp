@@ -15,13 +15,17 @@ py -3.14 -m venv .venv
 .\.venv\Scripts\python.exe configure_clients.py --client codex --apply
 ```
 
-Use `--client antigravity` or `--client both` for other configurations. The helper previews by default, changes only the `purewriter` entry, preserves unrelated settings, and backs up existing configuration files. For other clients, adapt [examples/mcp-config.json](examples/mcp-config.json).
+The helper now provides 13 client adapters: Codex, Antigravity, Claude Desktop, Claude Code, Cursor / Cursor CLI, Gemini CLI, VS Code / Copilot, Copilot CLI, Cline, Roo Code, OpenCode, Windsurf, and Devin Desktop. See [CLIENTS.md](CLIENTS.md) for paths, official references and commands.
+
+Use `--list-clients` to discover adapters, `--print-config` for a client-specific snippet, `--project-dir` for a project configuration, or `--config-path` for a custom file. Repeat `--client` to select multiple clients; both still means Antigravity + Codex only. The helper previews by default, backs up files before applying, preserves unrelated settings and JSONC comments, and retains existing approval and disabled settings. These are Windows-local stdio adapters; the automated checks cover configuration and SDK transport, not every application's UI.
 
 The default data directory is the current user's `Documents/PureWriter/App`. It must contain `Room.db` and `History.db`. Override it with `--data-dir` or `PUREWRITER_DATA_DIR`, especially when Documents is redirected. An optional `--book` / `DEFAULT_BOOK_NAME` sets the default book. Without one, supply an explicit `book` name or ID to each book-specific tool.
 
-Reload the MCP connection and call `pw_get_status`. The server exposes 21 tools, version 2.0.1. MCP messages and tool guidance are primarily in Chinese.
+Reload the MCP connection and call `pw_get_status`. The server exposes 21 tools, version 2.1.0. MCP messages and tool guidance are primarily in Chinese.
 
 ## Editing workflow
+
+See [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md) for client-independent tool conventions and retry behavior.
 
 1. List books and inspect the chapter outline.
 2. Read chapters and keep their returned `revision` values.
